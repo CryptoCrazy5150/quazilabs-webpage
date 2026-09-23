@@ -1,0 +1,224 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * QUAZI LABS — DESIGN SYSTEM
+ * Theme: "Neon Bridge" — Deep tech, alien green neon, glassmorphism
+ * Palette: Near-black base (#080808), Electric neon green (#00FF9F), Cyan (#00D4FF), Amber accent (#FFB800)
+ * Typography: Space Grotesk (display) + JetBrains Mono (data/code)
+ * Motion: Parallax hero, floating particles, glow pulses, scroll reveals
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.07 0.005 160);
+  --foreground: oklch(0.95 0.01 160);
+  --card: oklch(0.10 0.008 160);
+  --card-foreground: oklch(0.95 0.01 160);
+  --popover: oklch(0.10 0.008 160);
+  --popover-foreground: oklch(0.95 0.01 160);
+  --primary: oklch(0.85 0.22 160);
+  --primary-foreground: oklch(0.07 0.005 160);
+  --secondary: oklch(0.14 0.01 160);
+  --secondary-foreground: oklch(0.85 0.22 160);
+  --muted: oklch(0.14 0.01 160);
+  --muted-foreground: oklch(0.55 0.05 160);
+  --accent: oklch(0.75 0.18 200);
+  --accent-foreground: oklch(0.07 0.005 160);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.85 0.22 160 / 15%);
+  --input: oklch(0.85 0.22 160 / 10%);
+  --ring: oklch(0.85 0.22 160 / 50%);
+
+  /* Quazi custom tokens */
+  --neon-green: #00FF9F;
+  --neon-cyan: #00D4FF;
+  --neon-amber: #FFB800;
+  --neon-purple: #9B59FF;
+  --glass-bg: oklch(0.12 0.01 160 / 60%);
+  --glass-border: oklch(0.85 0.22 160 / 20%);
+  --glow-green: 0 0 20px #00FF9F40, 0 0 60px #00FF9F20;
+  --glow-cyan: 0 0 20px #00D4FF40, 0 0 60px #00D4FF20;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #080808;
+    color: #e8f5f0;
+    overflow-x: hidden;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    max-width: 1280px;
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  /* Glass card */
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Neon text */
+  .neon-green {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px #00FF9F80, 0 0 30px #00FF9F40;
+  }
+  .neon-cyan {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px #00D4FF80, 0 0 30px #00D4FF40;
+  }
+
+  /* Neon border glow */
+  .neon-border {
+    border: 1px solid #00FF9F40;
+    box-shadow: 0 0 15px #00FF9F20, inset 0 0 15px #00FF9F08;
+  }
+  .neon-border:hover {
+    border-color: #00FF9F80;
+    box-shadow: 0 0 25px #00FF9F40, inset 0 0 20px #00FF9F10;
+  }
+
+  /* Scan line animation */
+  .scanline::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 159, 0.015) 2px,
+      rgba(0, 255, 159, 0.015) 4px
+    );
+    pointer-events: none;
+  }
+
+  /* Gradient text — deep forest green → electric neon green → silver-white */
+  .gradient-text {
+    background: linear-gradient(135deg, #003a1e 0%, #006b3a 20%, #00b86b 45%, #00FF9F 70%, #a8f0d4 85%, #e8faf2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Section fade-in */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1), transform 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Particle canvas */
+  #particle-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: #00FF9F40; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #00FF9F80; }
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 15px #00FF9F30; }
+  50% { box-shadow: 0 0 35px #00FF9F60, 0 0 70px #00FF9F20; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes data-stream {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100px); opacity: 0; }
+}
+
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-gradient { 
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
