@@ -290,14 +290,7 @@ function Nav() {
       }}
     >
       <div className="container flex items-center justify-between py-4">
-        {/* Logo — larger, prominent */}
         <div className="flex items-center gap-4">
-          <img
-            src="/manus-storage/quazi-logo-v3_adf1770d.png"
-            alt="Quazi Labs"
-            className="h-14 w-14 object-contain"
-            style={{ filter: "drop-shadow(0 0 12px #00FF9F70)" }}
-          />
           <span
             className="text-2xl font-bold tracking-wider"
             style={{ fontFamily: "'Space Grotesk', sans-serif", color: "#e8f5f0" }}
@@ -981,12 +974,6 @@ function Footer() {
     <footer className="relative z-10 py-12 border-t" style={{ borderColor: "rgba(0,255,159,0.1)" }}>
       <div className="container flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <img
-            src="/manus-storage/quazi-logo-v3_adf1770d.png"
-            alt="Quazi Labs"
-            className="h-10 w-10 object-contain"
-            style={{ filter: "drop-shadow(0 0 8px #00FF9F50)" }}
-          />
           <span className="text-sm font-bold tracking-wider" style={{ color: "#4a6a5a" }}>QUAZI LABS</span>
         </div>
         <p className="text-xs font-mono" style={{ color: "#2a4a3a" }}>

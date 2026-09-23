@@ -203,10 +203,28 @@ function vitePluginStorageProxy(): Plugin {
   };
 }
 
-const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
+// GitHub Pages build: set GITHUB_PAGES_BASE (e.g. "/quazilabs-webpage/") to build a static site
+// served from that sub-path, without the Manus-hosting runtime, debug collector and storage proxy.
+const pagesBase = process.env.GITHUB_PAGES_BASE;
+
+// Drops the Umami analytics tag when its Manus-provided endpoint isn't configured.
+function vitePluginStripUnconfiguredAnalytics(): Plugin {
+  return {
+    name: "strip-unconfigured-analytics",
+    transformIndexHtml(html) {
+      if (process.env.VITE_ANALYTICS_ENDPOINT) return html;
+      return html.replace(/\s*<script[^>]*%VITE_ANALYTICS_ENDPOINT%[^>]*><\/script>/, "");
+    },
+  };
+}
+
+const plugins = pagesBase
+  ? [react(), tailwindcss(), vitePluginStripUnconfiguredAnalytics()]
+  : [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
   plugins,
+  base: pagesBase ?? "/",
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
