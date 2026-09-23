@@ -225,9 +225,6 @@ const plugins = pagesBase
 export default defineConfig({
   plugins,
   base: pagesBase ?? "/",
-  define: pagesBase
-    ? { "import.meta.env.VITE_LOGO_SRC": JSON.stringify(`${pagesBase}quazi-logo-v3.png`) }
-    : undefined,
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
